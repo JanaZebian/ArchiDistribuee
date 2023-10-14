@@ -1,0 +1,27 @@
+type Query {
+    movie_with_id(_id: String!): Movie # recuperer un film a partir de son ID!
+    # needs a resolver cause its type is an object
+    get_all_movies: [Movie]
+}
+
+# "!" means c'est obligatoire
+
+type Movie {
+    id: String!
+    title: String!
+    director: String!
+    rating: Float!
+    actors: [Actor]
+}
+
+type Mutation {
+    update_movie_rate(_id: String!, _rate: Float!): Movie
+}
+
+type Actor {
+    id: String!
+    firstname: String!
+    lastname: String!
+    birthyear: Int!
+    films: [String!]
+}
