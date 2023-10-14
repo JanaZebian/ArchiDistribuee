@@ -15,7 +15,7 @@ with open('{}/databases/users.json'.format("."), "r") as jsf:
 def home():
    return "<h1 style='color:blue'>Welcome to the User service!</h1>"
 
-@app.route("/booking/{userid}", methods=['GET'])
+@app.route("/booking/<userid>", methods=['GET'])
 def get_booking_by_userid(userid):
       for user in users:
          if str(user["id"]) == str(userid):
