@@ -1,0 +1,105 @@
+---
+openapi: 3.1.0
+info:
+  title: User API
+  summary: This is the API of the User service
+  description: This is the API of the User service
+  contact:
+    name: Helene Coullon
+    url: https://helene-coullon.fr/
+    email: helene.coullon@imt-atlantique.fr
+  license:
+    name: GPL v3
+    url: https://www.gnu.org/licenses/gpl-3.0.en.html
+  version: 1.0.0
+tags:
+- name: admins
+  description: Secured Admin-only calls
+- name: developers
+  description: Operations available to regular developers
+paths:
+    /booking/{userid}:
+        get: 
+            tags:
+                -developers
+                summary: get movie by User ID
+                # change description
+                description: obtain the reservations from the name or ID of a user that asks the Booking service to verify that the reservations exists at the preffered time
+                operationId: get_booking_by_userid
+                parameters:
+                - name: userid
+                  in : path
+                  description: User ID
+                  required: true
+                  schema:
+                    type: string
+                responses:
+                 "200":
+                   description: Booking time
+                   content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Booking'
+                 "400":
+                   description: bad input parameter
+
+    /getInfo/{userid}/{movietitle}:
+        get:
+            tags:
+                -developers
+                summary: get info on a film
+                description: get the info on film by asking the Movie service
+                operationId: get_info_on_movie
+                parameters:
+                - name: userid
+                  in : path
+                  description: User ID
+                  required: true
+                  schema:
+                    type: string
+                - name : movietitle
+                  in : path
+                  description: Movie title
+                  required: true
+                  schema:
+                     type: string
+                responses:
+                    "200":
+                        description: all info
+                        content:
+                         application/json:
+                        schema:
+                            $ref: '#/components/schemas/MovieItem'
+                    "400":
+                        description: bad input parameter
+                            
+components:
+  schemas:
+      booking: 
+        type: object
+        required: 
+            - date
+        properties:
+            date:
+                type: string
+                example: 20151201
+      MovieItem:
+        type: object
+        required:
+            - title
+            - rating
+            - director
+            - id
+        properties:
+            title:
+                type: string
+                example: The Martian
+            rating:
+                type: integer
+                example: 7
+            director:
+                type: string
+                example: Paul McGuigan
+            id:
+                type: string
+                example: 39ab85e5-5e8e-4dc5-afea-65dc368bd7ab
