@@ -18,60 +18,73 @@ tags:
 - name: developers
   description: Operations available to regular developers
 paths:
+  /:
+    get:
+      tags:
+        - developers
+      summary: home page of the user service
+      operationId: home
+      responses:
+        "200":
+          description: welcome message
+          content:
+            text/html:
+              schema:
+                type: string
+                example: <h1>Test</h1>
     /booking/{userid}:
-        get: 
-            tags:
-                -developers
-                summary: get movie by User ID
-                # change description
-                description: obtain the reservations from the name or ID of a user that asks the Booking service to verify that the reservations exists at the preffered time
-                operationId: get_booking_by_userid
-                parameters:
-                - name: userid
-                  in : path
-                  description: User ID
-                  required: true
+      get:
+        tags:
+          - developers
+        summary: get movie by User ID
+        description: obtain the reservations from ID of a user that asks the Booking service to verify that the reservations exists at the preferred time
+        operationId: get_booking_by_userid
+        parameters:
+        - name: userid
+          in : path
+          description: User ID
+          required: true
+          schema:
+            type: string
+        responses:
+           "200":
+             description: Booking time
+             content:
+              application/json:
                   schema:
-                    type: string
-                responses:
-                 "200":
-                   description: Booking time
-                   content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/Booking'
-                 "400":
-                   description: bad input parameter
+                      $ref: '#/components/schemas/Booking'
+           "400":
+             description: bad input parameter
 
     /getInfo/{userid}/{movietitle}:
-        get:
-            tags:
-                -developers
-                summary: get info on a film
-                description: get the info on film by asking the Movie service
-                operationId: get_info_on_movie
-                parameters:
-                - name: userid
-                  in : path
-                  description: User ID
-                  required: true
-                  schema:
-                    type: string
-                - name : movietitle
-                  in : path
-                  description: Movie title
-                  required: true
-                  schema:
-                     type: string
-                responses:
-                    "200":
-                        description: all info
-                        content:
-                         application/json:
-                        schema:
-                            $ref: '#/components/schemas/MovieItem'
-                    "400":
-                        description: bad input parameter
+      get:
+        tags:
+          - developers
+        summary: get info on a film
+        description: get the info on film by asking the Movie service
+        operationId: get_info_on_movie
+        parameters:
+        - name: userid
+          in : path
+          description: User ID
+          required: true
+          schema:
+            type: string
+        - name : movietitle
+          in : path
+          description: Movie title
+          required: true
+          schema:
+             type: string
+        responses:
+            "200":
+                description: all info
+                content:
+                 application/json:
+                schema:
+                    $ref: '#/components/schemas/MovieItem'
+            "400":
+                description: bad input parameter
                             
 components:
   schemas:
