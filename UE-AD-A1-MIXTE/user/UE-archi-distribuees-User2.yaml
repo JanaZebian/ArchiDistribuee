@@ -1,0 +1,110 @@
+---
+openapi: 3.1.0
+info:
+  title: User API
+  summary: This is the API of the User service
+  description: This is the API of the User service
+  contact:
+    name: Helene Coullon
+    url: https://helene-coullon.fr/
+    email: helene.coullon@imt-atlantique.fr
+  license:
+    name: GPL v3
+    url: https://www.gnu.org/licenses/gpl-3.0.en.html
+  version: 1.0.0
+tags:
+- name: admins
+  description: Secured Admin-only calls
+- name: developers
+  description: Operations available to regular developers
+paths:
+  \:
+    get:
+      tags:
+        - developers
+      summary: home page of the user service
+      operationId: home
+      responses:
+        "200":
+          description: welcome message
+          content:
+            text/html:
+              schema:
+                type: string
+                example: <h1>Test</h1>
+    /movielist/{userid}:
+      get:
+        tags:
+          - developers
+        summary: get list of movies from user Id
+        description: Get in a json format the list of movies(title,rating,actors), by calling GraphQL requests from movie server
+        operationId: getMovieList
+        parameters:
+        - name: userid
+          in : path
+          description: User ID
+          required: true
+          schema:
+            type: string
+        responses:
+           "200":
+             description: Movie List
+             content:
+              application/json:
+                  schema:
+                      $ref: '#/components/schemas/AllMovies'
+           "400":
+             description: bad input parameter
+
+components:
+  schemas:
+    AllMovies:
+      type: object
+      required:
+        - movies
+      properties:
+        movies:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/MovieItem'
+    MovieItem:
+      type: object
+      required:
+        - title
+        - rating
+        - director
+        - id
+        - actors :
+          - id
+          - firstname
+          - lastname
+          - birthyear
+          - films
+      properties:
+        title:
+          type: string
+          example: The Martian
+        rating:
+          type: integer
+          example: 7
+        director:
+          type: string
+          example: Paul McGuigan
+        id:
+          type: string
+          example: 39ab85e5-5e8e-4dc5-afea-65dc368bd7ab
+        actors:
+          type: string array
+          id:
+            type: string
+            example: actor1
+          firstname:
+            type: string
+            example: Leonardo
+          lastname:
+            type: string
+            example: DiCaprio
+          birthyear:
+            type: int
+            example: 1974

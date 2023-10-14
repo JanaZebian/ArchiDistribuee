@@ -4,7 +4,7 @@ type Query {
     get_all_movies: [Movie]
 }
 
-# "!" means c'est obligatoire
+# "!" means it's obligatory
 
 type Movie {
     id: String!

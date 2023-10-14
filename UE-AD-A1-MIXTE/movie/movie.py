@@ -16,7 +16,7 @@ movie = ObjectType('Movie')  # créer les objets associés au schéma
 actor = ObjectType('Actor')
 query.set_field('movie_with_id',
                 r.movie_with_id)  # associer le "resolver" que nous avons codé à la requête associée dans le schéma
-query.set_field('get_all_movies', r.get_all_movies) # lien
+query.set_field('get_all_movies', r.get_all_movies)  # lien
 movie.set_field('actors', r.resolve_actors_in_movie)
 mutation.set_field('update_movie_rate', r.update_movie_rate)
 schema = make_executable_schema(type_defs, movie, query, mutation,
@@ -35,6 +35,7 @@ def home():
 @app.route('/graphql', methods=['GET'])
 def playground():
     return PLAYGROUND_HTML, 200
+
 
 @app.route('/graphql', methods=['POST'])
 def graphql_server():
