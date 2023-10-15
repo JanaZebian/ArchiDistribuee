@@ -122,14 +122,14 @@ paths:
           description: item deleted
         "400":
           description: ID not found
-  /titles:
+  /moviebytitle:
     get:
       tags:
       - developers
       summary: get the movie by its title
       description: |
         By passing in the appropriate options, you can get Movie info
-      operationId: get_movie_bytitle
+      operationId: get_movie_by_title
       parameters:
       - name: title
         in: query
