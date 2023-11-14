@@ -22,10 +22,8 @@ def home():
 def get_booking_by_userid(userid):
     for user in users:
         if str(user["id"]) == str(userid):
-            data = {"userid": userid}  # create
-            r = requests.get("http://localhost:3201/booking", data=data)  # send the request and get a response
+            r = requests.get("http://localhost:3201/booking")  # send the request and get a response
             rj = r.json()  # get the json from the response
-            # rj["t"] access the json filed "t" and it has to be just like how it's written in the response
             res = make_response(jsonify(rj), 200)
             return res
     return make_response(jsonify({"error": "Date or userid not available"}), 400)
