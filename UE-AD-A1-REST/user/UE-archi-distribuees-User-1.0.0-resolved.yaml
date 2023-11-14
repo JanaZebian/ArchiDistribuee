@@ -56,7 +56,7 @@ paths:
            "400":
              description: bad input parameter
 
-    /getInfo/{userid}/{movietitle}:
+    /getInfo/{userid}/{movieid}:
       get:
         tags:
           - developers
@@ -70,9 +70,9 @@ paths:
           required: true
           schema:
             type: string
-        - name : movietitle
+        - name : movieid
           in : path
-          description: Movie title
+          description: Movie id
           required: true
           schema:
              type: string
