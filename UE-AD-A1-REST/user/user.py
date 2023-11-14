@@ -11,15 +11,21 @@ HOST = '0.0.0.0'
 with open('{}/databases/users.json'.format("."), "r") as jsf:
     users = json.load(jsf)["users"]
 
+
 # Home page/ default route
 @app.route("/", methods=['GET'])
 def home():
     return "<h1 style='color:blue'>Welcome to the User service!</h1>"
 
 
-# Method to get in a json format the schedule of a movie by passing <userid> as a string
 @app.route("/booking/<userid>", methods=['GET'])
 def get_booking_by_userid(userid):
+    """
+    Method to get in a json format the schedule of a movie from the Booking Service by passing <userid> as a string
+
+    :param userid: string
+    :return: json
+    """
     for user in users:
         if str(user["id"]) == str(userid):
             r = requests.get("http://localhost:3201/booking")  # send the request and get a response
@@ -29,9 +35,16 @@ def get_booking_by_userid(userid):
     return make_response(jsonify({"error": "Date or userid not available"}), 400)
 
 
-# Get the info on a film by asking the Movie service and passing "userid" & "movietitle" as strings
 @app.route("/getInfo/<userid>/<movieid>", methods=['GET'])
 def get_info_on_movie(userid,movieid):
+    """
+    Get the info on a film by asking the Movie service and passing "userid" & "movietitle" as strings
+
+    :param userid: string
+
+    :param movieid: string
+    :return: json
+    """
     for user in users:
         if str(user["id"]) == str(userid):
             r = requests.get("http://localhost:3200/movies/" + movieid)
