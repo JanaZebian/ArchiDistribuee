@@ -1,5 +1,5 @@
 type Query {
-    movie_with_id(_id: String!): Movie # recuperer un film a partir de son ID!
+    movie_with_id(_id: String!): Movie # retrieve a film from its ID!
     # needs a resolver cause its type is an object
     get_all_movies: [Movie]
 }

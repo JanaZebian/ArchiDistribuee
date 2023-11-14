@@ -1,7 +1,18 @@
 import json
 
 
-def movie_with_id(_, info, _id):  # comme c'est de type query (type de base) the first arg is _ for now, no nned for info here given by GRAPHQL, argument should be exactly like in the "schema" : "_id"
+def movie_with_id(_, info, _id):
+    """
+    seeing as it's of query type (basic type) the first arg is _ for now, no need for info here it's given by GRAPHQL,
+    argument should be exactly like in the schema : "_id"
+
+    This method gets the movie by passing its id as a parameter
+
+    :param _:
+    :param info:
+    :param _id: string
+    :return: movie
+    """
     with open('{}/data/movies.json'.format("."), "r") as file:
         movies = json.load(file)
         for movie in movies['movies']:
@@ -10,12 +21,30 @@ def movie_with_id(_, info, _id):  # comme c'est de type query (type de base) the
 
 
 def get_all_movies(_, info):
+    """
+    Method to get all the movies in the database
+
+    :param _:
+    :param info:
+    :return: movie list
+    """
     with open('{}/data/movies.json'.format("."), "r") as mfile:
         movies = json.load(mfile)
-        return movies['movies'] # pour envoyer la liste des movies
+        # to send the list of movies
+        return movies['movies']
 
 
 def update_movie_rate(_, info, _id, _rate):  # mutation is a basic type
+    """
+    This method is to change/update a movie's rate by passing its id and the new rating
+
+    :param _:
+    :param info:
+    :param _id: string
+    :param _rate: float
+    :return: Movie json
+    """
+
     newmovies = {}
     newmovie = {}
     with open('{}/data/movies.json'.format("."), "r") as rfile:
@@ -30,7 +59,14 @@ def update_movie_rate(_, info, _id, _rate):  # mutation is a basic type
     return newmovie
 
 
-def resolve_actors_in_movie(movie, info):  # this time the first param is movie, cause Movie is calling actor
+def resolve_actors_in_movie(movie, info):
+    """
+    this time the first param is movie, cause Movie is calling actor
+
+    :param movie: Movie
+    :param info:
+    :return: Actors
+    """
     with open('{}/data/actors.json'.format("."), "r") as file:
         data = json.load(file)
         actors = [actor for actor in data['actors'] if movie['id'] in actor['films']]

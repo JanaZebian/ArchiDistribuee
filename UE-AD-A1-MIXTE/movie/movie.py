@@ -10,17 +10,17 @@ app = Flask(__name__)
 
 # todo create elements for Ariadne
 type_defs = load_schema_from_path('movie.graphql')
-query = QueryType()  # créer les objets associés au schéma
+query = QueryType()  # creates the associated objects to the schema
 mutation = MutationType()
-movie = ObjectType('Movie')  # créer les objets associés au schéma
+movie = ObjectType('Movie')  # creates the associated objects to the movie schema
 actor = ObjectType('Actor')
 query.set_field('movie_with_id',
-                r.movie_with_id)  # associer le "resolver" que nous avons codé à la requête associée dans le schéma
-query.set_field('get_all_movies', r.get_all_movies)  # lien
+                r.movie_with_id)  # associates the resolver that we have coded to the request associated in the schema
+query.set_field('get_all_movies', r.get_all_movies)  # link
 movie.set_field('actors', r.resolve_actors_in_movie)
 mutation.set_field('update_movie_rate', r.update_movie_rate)
 schema = make_executable_schema(type_defs, movie, query, mutation,
-                                actor)  # nous créons un schéma dit exécutable avec les éléments précédents
+                                actor)  # create a schema called "executable" with the previous elements
 
 
 # root message
@@ -39,7 +39,12 @@ def playground():
 
 @app.route('/graphql', methods=['POST'])
 def graphql_server():
-    # todo to complete
+    """
+    We use the graphql_sync function imported initially and which allows, from the body or content of the POST request,
+    that is to say the GraphQL query (here placed in data), to resolve the query using the created schema previously.
+
+    :return: query result and a success code
+    """
     print("You are connected to the movie server from the user server!")
     data = request.get_json()
     success, result = graphql_sync(
