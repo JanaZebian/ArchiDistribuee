@@ -24,9 +24,14 @@ def get_schedule():
     return res
 
 
-# Get the movies shown at <date> as a string in a json format
 @app.route("/showmovies/<date>", methods=['GET'])
 def get_movies_bydate(date):
+    """
+    Get the movies shown at <date> as a string in a json format
+
+    :param date: string
+    :return:
+    """
     for time in schedule:
         if str(time["date"]) == str(date):
             res = make_response(jsonify(time), 200)
