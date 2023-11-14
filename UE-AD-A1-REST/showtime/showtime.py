@@ -24,7 +24,7 @@ def get_schedule():
     return res
 
 
-# Get the movies shown at <date> in a json format
+# Get the movies shown at <date> as a string in a json format
 @app.route("/showmovies/<date>", methods=['GET'])
 def get_movies_bydate(date):
     for time in schedule:
