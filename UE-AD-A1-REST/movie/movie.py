@@ -34,9 +34,14 @@ def get_json():
     return make_response(jsonify(movies), 200)
 
 
-# third entry point: requesting through a get method the information on a movie by his ID
 @app.route("/movies/<movieid>", methods=['GET'])
 def get_movie_byid(movieid):
+    """
+    third entry point: requesting through a get method the information on a movie by his ID
+
+    :param movieid: string
+    :return: json
+    """
     for movie in movies:
         # making sure that the movie ID exists in the database before answering the request
         if str(movie["id"]) == str(movieid):
@@ -44,10 +49,14 @@ def get_movie_byid(movieid):
     return make_response(jsonify({"error": "Movie ID not found"}), 400)
 
 
-# fourth entry point: requesting through a get accessor the information on a movie by passing its title in the path in a
-# json format
 @app.route("/moviebytitle", methods=['GET'])
 def get_movie_by_title():
+    """
+     fourth entry point: requesting through a get accessor the information on a movie by passing its title in the path in a
+json format
+
+    :return: json
+    """
     json = ""
     # making sure that the passed parameter is valid
     if request.args:
@@ -65,9 +74,14 @@ def get_movie_by_title():
     return res
 
 
-# fifth entry point: through a post accessor requesting to add/create a movie by passing its ID
 @app.route("/movies/<movieid>", methods=['POST'])
 def create_movie(movieid):
+    """
+    fifth entry point: through a post accessor requesting to add/create a movie by passing its ID
+
+    :param movieid: string
+    :return: json
+    """
     # accessing the json database with the request method from Flask
     req = request.get_json()
 
@@ -80,10 +94,16 @@ def create_movie(movieid):
     return make_response(jsonify({"message": "movie added"}), 200)
 
 
-# sixth entry point: through a PUT accessor modify the rating of a movie by passing its ID and new rating as argument in
-# the path
 @app.route("/movies/<movieid>/<rate>", methods=['PUT'])
 def update_movie_rating(movieid, rate):
+    """
+    sixth entry point: through a PUT accessor modify the rating of a movie by passing its ID and new rating as argument in
+the path
+
+    :param movieid: string
+    :param rate: float
+    :return: json
+    """
     for movie in movies:
         # like before checking if the movieID exists is necessary
         if str(movie["id"]) == str(movieid):
@@ -95,9 +115,14 @@ def update_movie_rating(movieid, rate):
     return make_response(jsonify({"error": "movie ID not found"}), 400)
 
 
-# seventh entry point: through the delete method, remove a movie also by passing its ID as an argument
 @app.route("/movies/<movieid>", methods=['DELETE'])
 def del_movie(movieid):
+    """
+    seventh entry point: through the delete method, remove a movie also by passing its ID as an argument
+
+    :param movieid: string
+    :return: json
+    """
     for movie in movies:
         if str(movie["id"]) == str(movieid):
             # removing the movie
