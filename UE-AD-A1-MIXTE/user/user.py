@@ -12,8 +12,6 @@ from concurrent import futures
 # import movie_pb2
 # import movie_pb2_grpc
 
-# CALLING GraphQL requests
-# todo to complete
 
 app = Flask(__name__)
 
@@ -29,8 +27,16 @@ def home():
     return "<h1 style='color:blue'>Welcome to the User service!</h1>"
 
 
+# CALLING GraphQL requests
 @app.route("/movielist/<userid>", methods=['GET'])
 def getMovieList(userid):
+    """
+    User now makes GraphQL requests to the Movie server instead of REST requests to get the list of movies in the
+    DataBase
+
+    :param userid: string
+    :return: json
+    """
     for user in users:
         if str(user["id"]) == str(userid):
             print("You are gonna get connected to the movie server!")
