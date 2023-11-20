@@ -5,12 +5,33 @@ import json
 from werkzeug.exceptions import NotFound
 
 # CALLING gRPC requests
-# import grpc
-from concurrent import futures
-# import booking_pb2
-# import booking_pb2_grpc
-# import movie_pb2
-# import movie_pb2_grpc
+import grpc
+import booking_pb2
+import booking_pb2_grpc
+
+
+def get_booking_by_user_id(stub, userid):
+    """
+    USER acting as a client calling distant procedure to get a booking by a user id
+    :param stub: Booking
+    :param userid: string
+    :return: none
+    """
+    booking = stub.GetBookingByUserID(userid)
+    print(booking)
+
+
+def get_bookings(stub):
+    """
+    User acting as a client calling distant method to get all the bookings in the database
+    :param stub: Booking
+    :return: none
+    """
+    bookings = stub.GetBookings(booking_pb2.EmptyData())
+    for booking in bookings:
+        print("UserId: %s " % booking.userid )
+        print("Dates: %s" % booking.dates)
+        print()
 
 
 app = Flask(__name__)
@@ -59,5 +80,17 @@ def getMovieList(userid):
 
 
 if __name__ == "__main__":
+    with grpc.insecure_channel('localhost:3003') as channel:
+        stub = booking_pb2_grpc.BookingStub(channel)
+
+        print("-------------- GetMovies --------------")
+        userid = booking_pb2.Id(id="dwight_schrute")
+        get_booking_by_user_id(stub, userid)
+
+        print("-------------- GetTimes --------------")
+        get_bookings(stub)
+
+    channel.close()
     print("Server running in port %s" % (PORT))
     app.run(host=HOST, port=PORT)
+

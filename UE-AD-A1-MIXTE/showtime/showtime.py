@@ -22,6 +22,8 @@ class ShowtimeServicer(showtime_pb2_grpc.ShowtimeServicer):
         :param context:
         :return: ShowtimeData
         """
+        print()
+        print("---GetMovies---")
         for movie in self.db:
             if movie['date'] == request.date:
                 print("Movie Found!")
