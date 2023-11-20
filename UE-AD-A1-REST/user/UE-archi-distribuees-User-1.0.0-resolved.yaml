@@ -32,6 +32,68 @@ paths:
               schema:
                 type: string
                 example: <h1>Test</h1>
+  /users/all:
+    get:
+      tags:
+        - developers
+      summary: Method that returns all the users in the database
+      responses:
+        "200":
+          description: all users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllUsers'
+  /users/userid/{userid}:
+    get:
+      tags:
+        - developers
+      summary: Method that returns a user by passing as an argument his id
+      operationID: get_user_by_id
+      parameters:
+        - name: userid
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: user by user id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Bad input parameter
+    /users/addUser/{userid}:
+      post:
+        tags:
+          - admins
+        summary: Method that adds a user to the database
+        operationID: add_user
+        parameters:
+          - name: : userid
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: string
+        requestBody:
+          description: Inventory item to add
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        responses:
+          "200":
+            description: User added
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+          "409":
+            description: an existing item already exists
     /booking/{userid}:
       get:
         tags:
@@ -116,3 +178,28 @@ components:
             id:
                 type: string
                 example: 39ab85e5-5e8e-4dc5-afea-65dc368bd7ab
+      AllUsers:
+        required:
+          - users
+        type: object
+        properties:
+          schedule:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+      User:
+        required:
+          - id
+          - name
+          - last_active
+        type: object
+        properties:
+          id:
+            type: string
+            example: "chris_rivers"
+          name:
+            type: string
+            example: "Chris Rivers"
+          last_active:
+            type: int
+            example: 1360031010

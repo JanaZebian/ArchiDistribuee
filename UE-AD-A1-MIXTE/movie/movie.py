@@ -40,7 +40,7 @@ def playground():
 @app.route('/graphql', methods=['POST'])
 def graphql_server():
     """
-    We use the graphql_sync function imported initially and which allows, from the body or content of the POST request,
+    We use the graphql_sync function imported initially which allows, from the body or content of the POST request,
     that is to say the GraphQL query (here placed in data), to resolve the query using the created schema previously.
 
     :return: query result and a success code

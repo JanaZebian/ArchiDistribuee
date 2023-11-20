@@ -35,6 +35,22 @@ def get_booking_by_userid(userid):
     return make_response(jsonify({"error": "Date or userid not available"}), 400)
 
 
+@app.route("/bookings/<userid>", methods=['POST'])
+def add_in_booking(userid):
+    """
+    From the user service we question the Booking server to add an item in its database
+    :param userid: string
+    :return: json
+    """
+    for user in users:
+        if user["id"] == userid:
+            r = requests.post("http://localhost:3201/bookings/" + userid, json=request.get_json())
+            rj = r.json()
+            return make_response(jsonify(rj), 200)
+    return make_response(jsonify({"error": "Couldn't find userid"}), 400)
+
+
+
 @app.route("/getInfo/<userid>/<movieid>", methods=['GET'])
 def get_info_on_movie(userid,movieid):
     """
@@ -50,7 +66,51 @@ def get_info_on_movie(userid,movieid):
             r = requests.get("http://localhost:3200/movies/" + movieid)
             rj = r.json()
             return make_response(jsonify(rj), 200)
-    return make_response(jsonify({"Error": "At least one arg isn't available"}))
+    return make_response(jsonify({"Error": "At least one arg isn't available"}), 400)
+
+
+@app.route("/moviebytitle/userid", methods=['GET'])
+def get_movie_by_title(userid):
+    for user in users:
+        if str(user["id"]) == str(userid):
+            r = requests.get("http://localhost:3200/moviebytitle")
+    return make_response(jsonify({"Error": "Userid doesn't exists"}), 400)
+
+@app.route("/users/all", methods=['GET'])
+def get_all_users():
+    """
+    Method that gets all the users from the users database
+    :return: json
+    """
+    return make_response(jsonify(users), 200)
+
+
+@app.route("/users/userid/<userid>", methods=['GET'])
+def get_user_by_id(userid):
+    """
+    Method that returns a user by passing his id as an argument
+    :param userid: string
+    :return: json
+    """
+    for user in users:
+        if user["id"] == userid:
+            return make_response(jsonify(user), 200)
+    return make_response(jsonify({"Error": "Userid doesn't exist in the database"}), 400)
+
+
+@app.route("/users/addUser/<userid>", methods=['POST'])
+def add_user(userid):
+    """
+    Method that adds a user
+    :param userid: string
+    :return: json
+    """
+    req = request.get_json()
+    for user in users:
+        if user["id"] == userid:
+            return make_response(jsonify({"Error": "Userid exists already in the database"}), 400)
+    users.append(req)
+    return make_response(jsonify({{"message": "User added to the in database"}}))
 
 
 if __name__ == "__main__":

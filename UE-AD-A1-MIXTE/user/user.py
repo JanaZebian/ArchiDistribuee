@@ -43,6 +43,43 @@ with open('{}/data/users.json'.format("."), "r") as jsf:
     users = json.load(jsf)["users"]
 
 
+@app.route("/users/all", methods=['GET'])
+def get_all_users():
+    """
+    Method that gets all the users from the users database
+    :return: json
+    """
+    return make_response(jsonify(users), 200)
+
+
+@app.route("/users/userid/<userid>", methods=['GET'])
+def get_user_by_id(userid):
+    """
+    Method that returns a user by passing his id as an argument
+    :param userid: string
+    :return: json
+    """
+    for user in users:
+        if user["id"] == userid:
+            return make_response(jsonify(user), 200)
+    return make_response(jsonify({"Error": "Userid doesn't exist in the database"}), 400)
+
+
+@app.route("/users/addUser/<userid>", methods=['POST'])
+def add_user(userid):
+    """
+    Method that adds a user
+    :param userid: string
+    :return: json
+    """
+    req = request.get_json()
+    for user in users:
+        if user["id"] == userid:
+            return make_response(jsonify({"Error": "Userid exists already in the database"}), 400)
+    users.append(req)
+    return make_response(jsonify({"message": "User added to the in database"}))
+
+
 @app.route("/", methods=['GET'])
 def home():
     return "<h1 style='color:blue'>Welcome to the User service!</h1>"
