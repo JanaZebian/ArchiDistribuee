@@ -29,7 +29,7 @@ def get_bookings(stub):
     """
     bookings = stub.GetBookings(booking_pb2.EmptyData())
     for booking in bookings:
-        print("UserId: %s " % booking.userid )
+        print("UserId: %s " % booking.userid)
         print("Dates: %s" % booking.dates)
         print()
 
@@ -116,6 +116,25 @@ def getMovieList(userid):
     return make_response(jsonify({"error": "UserId not available"}), 400)
 
 
+@app.route("/movieById/<userid>/<id>", methods=['GET'])
+def get_movie_by_its_id(userid, id: str):
+    for user in users:
+        if str(user["id"]) == str(userid):
+            print("You are gonna get connected to the movie server!")
+            message = """query{
+        movie_with_id(_id: "%s") {
+            id
+            title
+            director
+            rating
+        }
+    }""" % id
+            response = requests.post("http://localhost:3001/graphql", json={'query': message})
+            response_json = response.json()
+            return make_response(jsonify(response_json), 200)
+    return make_response(jsonify({"error": "UserId not available"}), 400)
+
+
 if __name__ == "__main__":
     with grpc.insecure_channel('localhost:3003') as channel:
         stub = booking_pb2_grpc.BookingStub(channel)
@@ -130,4 +149,3 @@ if __name__ == "__main__":
     channel.close()
     print("Server running in port %s" % (PORT))
     app.run(host=HOST, port=PORT)
-

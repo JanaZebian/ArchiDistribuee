@@ -62,7 +62,7 @@ json format
     if request.args:
         req = request.args
         for movie in movies:
-            # seeing if the title passed in the path exists in the movies database
+            # seeing if the title passed exists in the movies database
             if str(movie["title"]) == str(req["title"]):
                 # selecting the movie
                 json = movie

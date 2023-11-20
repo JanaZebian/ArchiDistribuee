@@ -18,21 +18,39 @@ def home():
     return "<h1 style='color:blue'>Welcome to the User service!</h1>"
 
 
-@app.route("/booking/<userid>", methods=['GET'])
-def get_booking_by_userid(userid):
+@app.route("/bookings/<userid>", methods=['GET'])
+def get_bookings_by_userid(userid):
     """
-    Method to get in a json format the schedule of a movie from the Booking Service by passing <userid> as a string
+    Method to get in a json format the schedule of the movies in the database from the Booking Service by passing
+    <userid> as a string
 
     :param userid: string
     :return: json
     """
     for user in users:
         if str(user["id"]) == str(userid):
-            r = requests.get("http://localhost:3201/booking")  # send the request and get a response
+            r = requests.get("http://localhost:3201/bookings")  # send the request and get a response
             rj = r.json()  # get the json from the response
             res = make_response(jsonify(rj), 200)
             return res
-    return make_response(jsonify({"error": "Date or userid not available"}), 400)
+    return make_response(jsonify({"error": "userid not available"}), 400)
+
+
+@app.route("/booking/<userid>", methods=['GET'])
+def get_booking_by_userid(userid):
+    """
+    Method to get in a json format the schedule of the movies in the database from the Booking Service by passing
+    <userid> as a string
+
+    :param userid: string
+    :return: json
+    """
+    for user in users:
+        if str(user["id"]) == str(userid):
+            r = requests.get("http://localhost:3201/bookings/" + userid)
+            rj = r.json()
+            return make_response(jsonify(rj), 200)
+    return make_response(jsonify({"error": "userid not available"}), 400)
 
 
 @app.route("/bookings/<userid>", methods=['POST'])
@@ -50,9 +68,8 @@ def add_in_booking(userid):
     return make_response(jsonify({"error": "Couldn't find userid"}), 400)
 
 
-
 @app.route("/getInfo/<userid>/<movieid>", methods=['GET'])
-def get_info_on_movie(userid,movieid):
+def get_info_on_movie(userid, movieid):
     """
     Get the info on a film by asking the Movie service and passing "userid" & "movietitle" as strings
 
@@ -69,12 +86,20 @@ def get_info_on_movie(userid,movieid):
     return make_response(jsonify({"Error": "At least one arg isn't available"}), 400)
 
 
-@app.route("/moviebytitle/userid", methods=['GET'])
+@app.route("/moviebytitle/<userid>", methods=['GET'])
 def get_movie_by_title(userid):
+    """
+    Method to get all the movies by title, where the title is given in a json body
+    :param userid: string
+    :return: json
+    """
     for user in users:
         if str(user["id"]) == str(userid):
             r = requests.get("http://localhost:3200/moviebytitle")
+            rj = r.json()
+            return make_response(jsonify(rj), 200)
     return make_response(jsonify({"Error": "Userid doesn't exists"}), 400)
+
 
 @app.route("/users/all", methods=['GET'])
 def get_all_users():

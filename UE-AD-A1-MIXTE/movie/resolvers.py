@@ -61,6 +61,7 @@ def update_movie_rate(_, info, _id, _rate):  # mutation is a basic type
 
 def resolve_actors_in_movie(movie, info):
     """
+    Resolver of Actors in movie because the type Actors is an ObjectType and not a query or mutation
     this time the first param is movie, cause Movie is calling actor
 
     :param movie: Movie
