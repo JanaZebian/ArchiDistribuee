@@ -95,10 +95,27 @@ def get_movie_by_title(userid):
     """
     for user in users:
         if str(user["id"]) == str(userid):
-            r = requests.get("http://localhost:3200/moviebytitle")
+            r = requests.get("http://localhost:3200/moviebytitle", params=request.args)
             rj = r.json()
             return make_response(jsonify(rj), 200)
     return make_response(jsonify({"Error": "Userid doesn't exists"}), 400)
+
+
+@app.route("/movies/<userid>/<movieid>", methods=['POST'])
+def add_in_movie(userid, movieid):
+    """
+    From the user service we question the Movie server to add an item in its database
+    :param userid: string
+
+    :param movieid: string
+    :return: json
+    """
+    for user in users:
+        if user["id"] == userid:
+            r = requests.post("http://localhost:3200/movies/movieid" + userid + movieid, json=request.get_json())
+            rj = r.json()
+            return make_response(jsonify(rj), 200)
+    return make_response(jsonify({"error": "Couldn't find userid"}), 400)
 
 
 @app.route("/users/all", methods=['GET'])
