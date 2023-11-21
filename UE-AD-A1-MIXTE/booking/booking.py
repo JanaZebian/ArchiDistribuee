@@ -75,7 +75,7 @@ class BookingServicer(booking_pb2_grpc.BookingServicer):
     def AddBookingByUser(self, request, context):
         # Checking the validity of the booking (checking if
         # the movie is available at the requested date).
-        time_req = requests.get("http://localhost:3202/showmovies/" + request.date)
+        time_req = requests.get("http://localhost:3002/showmovies/" + request.date)
         if not time_req.ok:
             return booking_pb2.Id(id="error : the booking's movie is not available at the requested date")
         else:
