@@ -15,7 +15,7 @@ def get_booking_by_user_id(stub, userid):
     USER acting as a client calling distant procedure to get a booking by a user id
     :param stub: Booking
     :param userid: string
-    :return: none
+    :return: void
     """
     booking = stub.GetBookingByUserID(userid)
     print(booking)
@@ -25,7 +25,7 @@ def get_bookings(stub):
     """
     User acting as a client calling distant method to get all the bookings in the database
     :param stub: Booking
-    :return: none
+    :return: void
     """
     bookings = stub.GetBookings(booking_pb2.EmptyData())
     for booking in bookings:
@@ -112,12 +112,18 @@ def getMovieList(userid):
 }"""
             response = requests.post("http://localhost:3001/graphql", json={'query': message})
             response_json = response.json()
-            return make_response(jsonify(response_json), 200)
+            return make_response(response_json, 200)
     return make_response(jsonify({"error": "UserId not available"}), 400)
 
 
 @app.route("/movieById/<userid>/<id>", methods=['GET'])
 def get_movie_by_its_id(userid, id: str):
+    """
+
+    :param userid: string
+    :param id: string
+    :return: json
+    """
     for user in users:
         if str(user["id"]) == str(userid):
             print("You are gonna get connected to the movie server!")
@@ -131,7 +137,7 @@ def get_movie_by_its_id(userid, id: str):
     }""" % id
             response = requests.post("http://localhost:3001/graphql", json={'query': message})
             response_json = response.json()
-            return make_response(jsonify(response_json), 200)
+            return make_response(response_json, 200)
     return make_response(jsonify({"error": "UserId not available"}), 400)
 
 
@@ -139,11 +145,11 @@ if __name__ == "__main__":
     with grpc.insecure_channel('localhost:3003') as channel:
         stub = booking_pb2_grpc.BookingStub(channel)
 
-        print("-------------- GetMovies --------------")
+        print("-------------- GetBookingByUserID --------------")
         userid = booking_pb2.Id(id="dwight_schrute")
         get_booking_by_user_id(stub, userid)
 
-        print("-------------- GetTimes --------------")
+        print("-------------- GetBookings --------------")
         get_bookings(stub)
 
     channel.close()

@@ -9,12 +9,15 @@ import showtime_pb2
 import showtime_pb2_grpc
 
 
+# Client
+
+
 def get_movies(stub, date):
     """
     Client calling the server to get the movies on a specific date
     :param stub: client stub
     :param date: string
-    :return:
+    :return: void
     """
     movie = stub.GetMovies(date)
     print(movie)
@@ -24,12 +27,15 @@ def get_times(stub):
     """
     Client calling servicer to get the schedule
     :param stub: client stub
-    :return:
+    :return: void
     """
     schedule = stub.GetTimes(showtime_pb2.Empty())
     for time in schedule:
         print("Date: %s  " % time.date)
         print("Movie: %s " % time.movies)
+
+
+# Server
 
 
 class BookingServicer(booking_pb2_grpc.BookingServicer):
@@ -42,7 +48,7 @@ class BookingServicer(booking_pb2_grpc.BookingServicer):
         """
         Distant method that gets a user's bookings by passing his id as a parameter
 
-        :param request: string
+        :param request:
         :param context:
         :return: BookingData
         """
@@ -59,7 +65,7 @@ class BookingServicer(booking_pb2_grpc.BookingServicer):
         Distant procedure to get all the bookings in the DataBase
         :param request:
         :param context:
-        :return: BookingData
+        :return: stream BookingData
         """
         for booking in self.db:
             yield booking_pb2.BookingData(userid=booking['userid'], dates=booking['dates'])
@@ -87,4 +93,3 @@ def serve():
 
 if __name__ == '__main__':
     serve()
-    # run()

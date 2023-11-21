@@ -48,7 +48,7 @@ paths:
     get:
       tags:
         - developers
-      summary: Method that returns a user by passing as an argument his id
+      summary: Method that returns a user by passing its id as an argument
       operationID: get_user_by_id
       parameters:
         - name: userid
@@ -74,11 +74,11 @@ paths:
         operationID: add_user
         parameters:
           - name: : userid
-          in: path
-          description: User ID
-          required: true
-          schema:
-            type: string
+            in: path
+            description: User ID
+            required: true
+            schema:
+              type: string
         requestBody:
           description: Inventory item to add
           content:
@@ -99,7 +99,7 @@ paths:
         tags:
           - developers
         summary: get movie by User ID
-        description: obtain the reservations from ID of a user that asks the Booking service to verify that the reservations exists at the preferred time
+        description: obtain the reservations from a user's ID that asks the Booking service to verify that the reservations exists at the preferred time
         operationId: get_booking_by_userid
         parameters:
         - name: userid
@@ -117,13 +117,63 @@ paths:
                       $ref: '#/components/schemas/Booking'
            "400":
              description: bad input parameter
-
+    /bookings/{userid}:
+      get:
+        tags:
+          - developers
+        summary: get the schedule of the movies from the Booking Service by passing <userid> as an argument
+        description: get the schedule of the movies in the database from the Booking Service by passing <userid> as a string
+        operationId: get_bookings_by_userid
+        parameters:
+          - name: userid
+            in: path
+            description: User ID
+            required: true
+            schema:
+              type: string
+        responses:
+          "200":
+            description: Bookings
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Booking'
+          "400":
+            description: bad input parameter
+      post:
+        tags:
+          - admins
+        summary: adds an item
+        description: adds a booking in the Booking Service's database by passing <userid> as a string argument
+        operationID: add_in_booking
+        parameters:
+          - name: : userid
+            in: path
+            description: User ID
+            required: true
+            schema:
+              type: string
+        requestBody:
+          description: Inventory item to add
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        responses:
+          "200":
+            description: Booking added
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+          "409":
+            description: an existing item already exists
     /getInfo/{userid}/{movieid}:
       get:
         tags:
           - developers
         summary: get info on a film
-        description: get the info on film by asking the Movie service
+        description: get the info on a film by asking the Movie service
         operationId: get_info_on_movie
         parameters:
         - name: userid
@@ -147,7 +197,35 @@ paths:
                     $ref: '#/components/schemas/MovieItem'
             "400":
                 description: bad input parameter
-                            
+    /movies/{userid}/{movieid}:
+      /post:
+        tags:
+          - admins
+        summary: adds a movie in the Movie Service
+        description: adds a movie in the Movie Service by passing the user's id and the possibly added movieid
+        operationId: add_in_movie
+        parameters:
+          - name: userid
+            in: path
+            description: User ID
+            required: true
+            schema:
+              type: string
+          - name: movieid
+            in: path
+            description: Movie ID
+            required: true
+            schema:
+              type: string
+        responses:
+          "200":
+            description: Movie added
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Booking'
+          "400":
+            description: bad input parameter
 components:
   schemas:
       booking: 

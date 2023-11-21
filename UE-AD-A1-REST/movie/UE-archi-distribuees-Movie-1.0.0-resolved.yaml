@@ -54,7 +54,7 @@ paths:
       tags:
       - developers
       summary: get the movie by its id
-      description: By passing in the appropriate options, you can get info of a Movie
+      description: By passing in the appropriate options, you can get info on a Movie
       operationId: get_movie_byid
       parameters:
       - name: movieid

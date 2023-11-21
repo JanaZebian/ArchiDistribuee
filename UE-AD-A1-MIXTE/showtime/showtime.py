@@ -36,7 +36,7 @@ class ShowtimeServicer(showtime_pb2_grpc.ShowtimeServicer):
 
         :param request:
         :param context:
-        :return: String list
+        :return: Stream String list
         """
         for time in self.db:
             yield showtime_pb2.ShowtimeData(date=time['date'], movies=time['movies'])
