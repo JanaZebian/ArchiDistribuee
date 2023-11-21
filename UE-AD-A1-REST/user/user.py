@@ -86,21 +86,6 @@ def get_info_on_movie(userid, movieid):
     return make_response(jsonify({"Error": "At least one arg isn't available"}), 400)
 
 
-@app.route("/moviebytitle/<userid>", methods=['GET'])
-def get_movie_by_title(userid):
-    """
-    Method to get all the movies by title, where the title is given in a json body
-    :param userid: string
-    :return: json
-    """
-    for user in users:
-        if str(user["id"]) == str(userid):
-            r = requests.get("http://localhost:3200/moviebytitle", params=request.args)
-            rj = r.json()
-            return make_response(jsonify(rj), 200)
-    return make_response(jsonify({"Error": "Userid doesn't exists"}), 400)
-
-
 @app.route("/movies/<userid>/<movieid>", methods=['POST'])
 def add_in_movie(userid, movieid):
     """
