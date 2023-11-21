@@ -1,6 +1,5 @@
-from flask import Flask, render_template, request, jsonify, make_response
+from flask import Flask, jsonify, make_response
 import json
-from werkzeug.exceptions import NotFound
 
 app = Flask(__name__)
 
