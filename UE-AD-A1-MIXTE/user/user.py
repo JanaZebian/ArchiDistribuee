@@ -1,8 +1,7 @@
 # REST API
-from flask import Flask, render_template, request, jsonify, make_response
+from flask import Flask, request, jsonify, make_response
 import requests
 import json
-from werkzeug.exceptions import NotFound
 
 # CALLING gRPC requests
 import grpc
@@ -33,6 +32,10 @@ def get_bookings(stub):
         print("Dates: %s" % booking.dates)
         print()
 
+
+def add_booking_by_user(stub, userid, date, movieid):
+    new_booking = stub.AddBookingByUser(booking_pb2.NewBookingData(userid = userid, date= date, movieid= movieid))
+    print(new_booking.id)
 
 app = Flask(__name__)
 
@@ -151,6 +154,9 @@ if __name__ == "__main__":
 
         print("-------------- GetBookings --------------")
         get_bookings(stub)
+        print("-------------- AddbookingByUser --------------")
+        add_booking_by_user(stub,userid="dwight_schrute", date="20151130", movieid="720d006c-3a57-4b6a-b18f-9b713b073f3c")
+        print()
 
     channel.close()
     print("Server running in port %s" % (PORT))
