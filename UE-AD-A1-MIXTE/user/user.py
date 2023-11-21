@@ -58,9 +58,17 @@ def get_bookings(userid):
             return make_response(jsonify({"error": "Userid not found"}), 400)
 
 
-def add_booking_by_user(stub, userid, date, movieid):
-    new_booking = stub.AddBookingByUser(booking_pb2.NewBookingData(userid=userid, date=date, movieid=movieid))
-    print(new_booking.id)
+@app.route("/addBooking/<userid>", methods=['POST'])
+def add_booking_by_user(userid):
+    with grpc.insecure_channel('localhost:3003') as channel:
+        stub = booking_pb2_grpc.BookingStub(channel)
+        req = request.get_json()
+        for user in users:
+            if user["id"] == userid:
+                new_booking = stub.AddBookingByUser(booking_pb2.NewBookingData(userid=userid, date=req["date"],
+                                                                               movieid=req["movieid"]))
+                return make_response(jsonify({"id": new_booking.id}), 200)
+        return make_response(jsonify({"error": "Userid not found"}), 400)
 
 
 @app.route("/users/all", methods=['GET'])
