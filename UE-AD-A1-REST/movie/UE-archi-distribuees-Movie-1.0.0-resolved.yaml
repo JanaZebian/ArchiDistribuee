@@ -179,8 +179,73 @@ paths:
           description: rate updated
         "400":
           description: movie ID not found
+  /omdb/{title}/{year}:
+    summary: get the movie by its title and release year using the OMDb API
+    description: |
+      By passing in the appropriate options, you can get Movie info
+    operationId: omdb_movie_by_title
+    parameters:
+      - name: title
+        in: path
+        description: title of the movie to retrieve data about
+        required: true
+        schema:
+          type: string
+      - name: title
+        in: path
+        description: the OMDb API will look for the movie at and after that year (pass -1 to ignore this parameter)
+        required: true
+        schema:
+          type: int
+    responses:
+      "200":
+        description: Movie item
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovieItem'
+      "400":
+        description: bad input parameter, error returned
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schema/ErrorJSON'
+  /omdb/{movieid}:
+    summary: get the movie by its IMDb ID using the OMDb API
+    description: |
+      By passing in the appropriate options, you can get Movie info
+    operationId: omdb_movie_by_id
+    parameters:
+      - name: movieid
+        in: path
+        description: IMDb ID of the movie to retrieve data about
+        required: true
+        schema:
+          type: string
+          example: tt6172126
+    responses:
+      "200":
+        description: Movie item
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovieItem'
+      "400":
+        description: bad input parameter, error returned
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schema/ErrorJSON'
 components:
   schemas:
+    ErrorJSON:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          example: the API encountered an error when processing the request
     AllMovies:
       type: object
       required:
@@ -211,5 +276,3 @@ components:
         id:
           type: string
           example: 39ab85e5-5e8e-4dc5-afea-65dc368bd7ab
-
-
