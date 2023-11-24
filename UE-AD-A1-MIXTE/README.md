@@ -14,15 +14,15 @@ python movie.py
 
 puis les suivantes dans le second :
 
-cd ..\showtime<br>
+cd showtime<br>
 python showtime.py
 
 puis les suivantes dans le troisième :
 
-cd ..\booking<br>
+cd booking<br>
 python booking.py
 
 puis les suivantes dans le quatrième :
 
-cd ..\user<br>
+cd user<br>
 python user.py
