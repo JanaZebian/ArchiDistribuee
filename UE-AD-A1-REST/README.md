@@ -6,7 +6,7 @@ Ce projet représente un exemple d'utilisation d'APIs REST dans le cadre de la g
 <br>3) une API REST "Times" ayant pour rôle la gestion des horaires de passage des différents films proposés
 <br>4) une API REST "Movie", ayant pour rôle la gestion des films proposés.
 
-L'API User consomme les APIs Movie et Booking. L'API Booking consomme l'API Times.
+L'API User consomme les APIs Movie et Booking. L'API Booking consomme l'API Times. De plus, l'API Movie consomme l'API OMDb (https://www.omdbapi.com/).
 
 Pour lancer le code de ce projet, ouvrir 4 terminaux, tous dans le répertoire du projet.<br>Ensuite, effectuer les commandes suivantes dans le premier terminal :
 
