@@ -7,16 +7,22 @@ Ce projet représente un exemple d'utilisation d'APIs mixtes dans le cadre de la
 
 L'API User consomme les APIs Movie et Booking. L'API Booking consomme l'API Times.
 
-Pour lancer le code de ce projet, ouvrir un terminal dans le répertoire du projet, puis effectuer les commandes suivantes :
+Pour lancer le code de ce projet, ouvrir 4 terminaux, tous dans le répertoire du projet.<br>Ensuite, effectuer les commandes suivantes dans le premier terminal :
 
 cd movie<br>
 python movie.py
 
+puis les suivantes dans le second :
+
 cd ..\showtime<br>
 python showtime.py
 
+puis les suivantes dans le troisième :
+
 cd ..\booking<br>
 python booking.py
+
+puis les suivantes dans le quatrième :
 
 cd ..\user<br>
 python user.py
