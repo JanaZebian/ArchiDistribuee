@@ -7,11 +7,16 @@ Ce projet représente un exemple d'utilisation d'APIs mixtes dans le cadre de la
 
 L'API User consomme les APIs Movie et Booking. L'API Booking consomme l'API Times.
 
-Pour lancer le code de ce projet, effectuer les commandes suivantes :
+Pour lancer le code de ce projet, ouvrir un terminal dans le répertoire du projet, puis effectuer les commandes suivantes :
+
+cd movie
+python movie.py
 
 cd ..\showtime
-python -m grpc_tools.protoc -I=./protos --python_out=. --grpc_python_out=. showtime.proto
-cd UE-AD-A1-MIXTE\booking
-python -m grpc_tools.protoc -I=./protos --python_out=. --grpc_python_out=. booking.proto
+python showtime.py
 
-cd UE-AD-A1-MIXTE
+cd ..\booking
+python booking.py
+
+cd ..\user
+python user.py
