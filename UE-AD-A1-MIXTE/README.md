@@ -32,7 +32,7 @@ python user.py
 
 Ce projet est un exemple d'utilisation d'APIs mixtes dans le cadre de la gestion de réservations de séances de cinéma. Il correspond au TP Mixte Vert, et contient 4 APIs : <br>1) une API REST "User" ayant pour rôle la gestion des utilisateurs
 <br>2) une API gRPC "Booking" ayant pour rôle la gestion des réservations
-<br>3) une API gRPC "Times" ayant pour rôle la gestion des horaires de passage des différents films proposés
+<br>3) une API gRPC "Times" ayant pour rôle la gestion des horaires de projection des différents films proposés
 <br>4) une API GraphQL "Movie", ayant pour rôle la gestion des films proposés.
 
 L'API User consomme les APIs Movie et Booking. L'API Booking consomme l'API Times.
