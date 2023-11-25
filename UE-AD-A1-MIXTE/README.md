@@ -3,7 +3,7 @@
 This project is an example of usage of mixed APIs as part of the management of bookings in a movie theater. It corresponds to the Green Mixed practicum, and contains 4 APIs : <br>1) a  "User" REST API that is meant to manage users
 <br>2) a "Booking" gRPC API that is meant to manage bookings
 <br>3) a "Times" gRPC API that is meant to manage the different schedules at which the movies are broadcasted at the movie theater
-<br>4) a "Movie" GraphQL API that is meant to manage the many movies that the movie theater displays.
+<br>4) a "Movie" GraphQL API that is meant to manage the different movies that the movie theater broadcasts.
 
 The User API consumes the Movie and Booking APIs. The Booking API consumes the Times API.
 
