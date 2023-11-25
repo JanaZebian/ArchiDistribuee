@@ -1,5 +1,35 @@
 # UE-AD-A1-REST
 
+This project is an example of usage of REST APIs as part of the management of bookings in a movie theater. It corresponds to the Red REST practicum, and contains 4 APIs : <br>1) a  "User" REST API that is meant to manage users
+<br>2) a "Booking" REST API that is meant to manage bookings
+<br>3) a "Times" REST API that is meant to manage the different schedules at which the movies are broadcasted at the movie theater
+<br>4) a "Movie" REST API that is meant to manage the different movies that the movie theater broadcasts.
+
+The User API consumes the Movie and Booking APIs. The Booking API consumes the Times API. Furthermore, the Movie API consumes the OMDb API (https://www.omdbapi.com/).
+
+To run the project's code, open 4 terminals in the project's folder.
+<br>Then, run the following commands in the first terminal :
+
+cd movie<br>
+python movie.py
+
+then run the following commands in the second one :
+
+cd showtime<br>
+python showtime.py
+
+then run the following commands in the third one :
+
+cd booking<br>
+python booking.py
+
+then run the following commands in the fourth one :
+
+cd user<br>
+python user.py
+
+-------------------------------------Version française-------------------------------------
+
 Ce projet représente un exemple d'utilisation d'APIs REST dans le cadre de la gestion de réservations de séances de cinéma. Il correspond au TP REST Rouge, et contient 4 APIs :
 <br>1) une API REST "User" ayant pour rôle la gestion des utilisateurs
 <br>2) une API REST "Booking" ayant pour rôle la gestion des réservations
